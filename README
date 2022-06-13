@@ -1,0 +1,1 @@
+Demo für  arquillian, jwt und mq. Start with bash test.sh, which uses sends a message from front- to backend using both api and mq

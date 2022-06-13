@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<server description="Sample Liberty server">
+
+  <!--The Liberty Maven Plugin has generated Liberty features necessary for your application in configDropins/overrides/generated-features.xml-->
+
+  <featureManager>
+    <!-- <feature>javaee-7.0</feature> -->
+    <feature>beanValidation-1.1</feature>
+    <feature>cdi-1.2</feature>
+    <feature>jaxrs-2.0</feature>
+    <feature>jaxrsClient-2.0</feature>
+    <feature>jdbc-4.1</feature>
+    <feature>mdb-3.2</feature>
+    <feature>jpa-2.1</feature>
+    <feature>servlet-3.1</feature>
+
+    <feature>jsf-2.2</feature>
+
+    <feature>jwt-1.0</feature>
+    <feature>ssl-1.0</feature>
+
+    <feature>wasJmsClient-2.0</feature>
+    <feature>jndi-1.0</feature>
+    
+    <feature>localConnector-1.0</feature>
+  </featureManager>
+
+  <!-- JMS -->
+  <messagingEngine> <queue id="QUEUE1"> </queue> </messagingEngine>
+  <jmsActivationSpec id="backend-services/SampleListenerMDB"> <!-- no lookup here: must be artifactId/beanNAME -->
+    <properties.wasJms destinationRef="jms/JmsQueue" remoteServerAddress="localhost:7277:BootstrapBasicMessaging"/>
+  </jmsActivationSpec>
+  <jmsQueue id="jms/JmsQueue">
+    <properties.wasJms queueName="QUEUE1"/>
+  </jmsQueue>
+
+
+  <!-- DB -->
+
+  <!-- Derby Library Configuration -->
+  <library id="derbyJDBCLib">
+    <fileset dir="${shared.resource.dir}/" includes="derby*.jar"/>
+  </library>
+
+  <!-- Datasource Configuration -->
+  <dataSource id="eventjpadatasource" jndiName="jdbc/eventjpadatasource">
+    <jdbcDriver libraryRef="derbyJDBCLib"/>
+    <properties.derby.embedded createDatabase="create" databaseName="EventDB"/>
+  </dataSource>
+  
+  <!-- JWT -->
+  <jwtConsumer id="jwtUserConsumer" issuer="egal" jwkEnabled="true" jwkEndpointUrl="https://localhost:9091/jwt/ibm/api/jwtFrontEndBuilder/jwk"/>
+
+
+  <!-- http(s) -->
+  <httpEndpoint host="*" httpPort="${default.http.port}" httpsPort="${default.https.port}" id="defaultHttpEndpoint"/>
+
+  <!-- contextRoot -->
+  <application context-root="/" location="backendServices.war" type="war"/>
+
+</server>

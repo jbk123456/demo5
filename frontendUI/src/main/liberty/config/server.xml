@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<server description="Sample Liberty server">
+
+  <featureManager>
+    <!-- <feature>javaee-7.0</feature> -->
+    <feature>beanValidation-1.1</feature>
+    <feature>cdi-1.2</feature>
+    <feature>jaxrs-2.0</feature>
+    <feature>jaxrsClient-2.0</feature>
+    <feature>jdbc-4.1</feature>
+    <feature>mdb-3.2</feature>
+    <feature>jpa-2.1</feature>
+    <feature>servlet-3.1</feature>
+
+    <feature>jsf-2.2</feature>
+
+    <feature>jwt-1.0</feature>
+    <feature>ssl-1.0</feature>
+
+    <feature>wasJmsServer-1.0</feature>
+    <feature>wasJmsClient-2.0</feature>
+    <feature>jndi-1.0</feature>
+
+            <feature>jms-2.0</feature>
+        <feature>jsonp-1.0</feature>
+        <feature>mpRestClient-1.1</feature>
+
+    <feature>localConnector-1.0</feature>
+  </featureManager>
+
+  <!-- JMS -->
+  <wasJmsEndpoint host="*" wasJmsPort="7277" wasJmsSSLPort="-1"/>
+
+  <messagingEngine><queue id="QUEUE1"/></messagingEngine>
+  <jmsQueueConnectionFactory jndiName="jms/JmsFactory"> <!-- res lookup -->
+    <properties.wasJms remoteServerAddress="localhost:7277:BootStrapBasicMessaging"/>
+  </jmsQueueConnectionFactory>
+  <jmsQueue jndiName="jms/JmsQueue"> <!-- res lookup -->
+    <properties.wasJms queueName="QUEUE1"/>
+  </jmsQueue>
+
+
+  <!-- JWT -->
+  <jwtBuilder expiry="24h" id="jwtFrontEndBuilder" issuer="egal" jwkEnabled="true"/> 
+
+  <!-- http(s) -->
+  <httpEndpoint host="*" httpPort="${default.http.port}" httpsPort="${default.https.port}" id="defaultHttpEndpoint"/>
+
+  <!-- contextRoot -->
+  <application context-root="/" location="frontendUI.war"/>
+
+</server>

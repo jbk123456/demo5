@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.openliberty.guides</groupId>
+    <artifactId>backend-services</artifactId>
+    <packaging>war</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <!-- Liberty configuration -->
+	<liberty.var.default.http.port>9080</liberty.var.default.http.port>
+	<liberty.var.default.https.port>9081</liberty.var.default.https.port>
+	<debugPort>7779</debugPort>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>4.5.13</version>
+            </dependency>
+
+            <!-- tag::arquillian-bom[] -->
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>1.6.0.Final</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- end::arquillian-bom[] -->
+
+
+	    <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider -->
+<dependency>
+    <groupId>com.fasterxml.jackson.jaxrs</groupId>
+    <artifactId>jackson-jaxrs-json-provider</artifactId>
+    <version>2.13.3</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-core</artifactId>
+    <version>2.13.3</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.jaxrs/jackson-jaxrs-base -->
+<dependency>
+    <groupId>com.fasterxml.jackson.jaxrs</groupId>
+    <artifactId>jackson-jaxrs-base</artifactId>
+    <version>2.13.3</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.13.3</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-jaxb-annotations -->
+<dependency>
+    <groupId>com.fasterxml.jackson.module</groupId>
+    <artifactId>jackson-module-jaxb-annotations</artifactId>
+    <version>2.13.3</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-annotations</artifactId>
+    <version>2.13.3</version>
+</dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- Provided dependencies -->
+        <!-- <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-web-api</artifactId>
+            <version>9.1.0</version>
+            <scope>provided</scope>
+        </dependency> -->
+              <!-- Provided dependencies -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.ibm.websphere.appserver.api</groupId>
+            <artifactId>com.ibm.websphere.appserver.api.jwt</artifactId>
+            <version>1.1.64</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.microprofile</groupId>
+            <artifactId>microprofile</artifactId>
+            <version>1.4</version>
+            <type>pom</type>
+            <!-- <scope>provided</scope> -->
+        </dependency>
+  <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+<dependency>
+    <groupId>io.openliberty.arquillian</groupId>
+    <artifactId>arquillian-liberty-managed-jakarta</artifactId>
+    <version>2.0.2</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.jboss.arquillian.junit/arquillian-junit-container -->
+<dependency>
+    <groupId>org.jboss.arquillian.junit</groupId>
+    <artifactId>arquillian-junit-container</artifactId>
+    <version>1.6.0.Final</version>
+    <scope>test</scope>
+</dependency>
+
+
+        <!-- For tests -->
+        <!-- <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.7.2</version>
+            <scope>test</scope>
+        </dependency> -->
+        <!-- <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-client</artifactId>
+            <version>6.0.0.Final</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-json-binding-provider</artifactId>
+            <version>6.0.0.Final</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>jakarta.json</artifactId>
+            <version>2.0.1</version>
+            <scope>test</scope>
+        </dependency> -->
+        <!-- Derby from https://mvnrepository.com/artifact/org.apache.derby/derby -->
+        <!-- Use 10.14.2 that support Java 8. If use 10.15+, -->
+        <!-- need to use Java 9+, and -->
+        <!-- add 2 more derby dependencies: derbytools and derbyshared -->
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <version>10.14.2.0</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.2</version>
+            </plugin>
+            <!-- Enable liberty-maven plugin -->
+            <plugin>
+                <groupId>io.openliberty.tools</groupId>
+                <artifactId>liberty-maven-plugin</artifactId>
+                <version>3.6</version>
+                <configuration>
+                    <copyDependencies>
+                        <location>${project.build.directory}/liberty/wlp/usr/shared/resources</location>
+                        <dependency>
+                            <groupId>org.apache.derby</groupId>
+                            <artifactId>derby</artifactId>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.derby</groupId>
+                            <artifactId>derbytools</artifactId>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.derby</groupId>
+                            <artifactId>derbyshared</artifactId>
+                        </dependency>
+                    </copyDependencies>
+                </configuration>
+            </plugin>
+            <!-- Plugin to run unit tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+            </plugin>
+            <!-- Plugin to run integration tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.22.2</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <backend.http.port>${liberty.var.default.http.port}</backend.http.port>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
